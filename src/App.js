@@ -23,6 +23,10 @@ const GlobalStyle = createGlobalStyle `
   h1, h2, h3, h4,h5, h6{
     font-weight: normal;
   }
+  input, textarea, button{
+    outline: none;
+    border:none;
+  }
 
   body{
     font-family: 'Helvetica', sans-serif;
@@ -33,10 +37,6 @@ const GlobalStyle = createGlobalStyle `
     overflow-x: hidden;
     background: #ffffff;
     line-height: normal;
-  }
-
-  input, textarea{
-    outline: none;
   }
 
   @media (min-width: 1921px) {

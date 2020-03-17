@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import {variables} from '../variables';
 //components
-import Task from './Task'
+import Task from './Task';
+import NewTask from './NewTask';
 
 const Wrapper = styled.div`
     width:20%;
@@ -28,8 +29,7 @@ const Title = styled.div`
     }
     p{
         padding-left:5px; 
-    }
-    
+    }  
 `;
 
 const Column = (
@@ -53,6 +53,7 @@ const Column = (
                     text={text}
                 />
             ))}
+            <NewTask />
         </Wrapper>
     )
 };

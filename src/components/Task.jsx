@@ -5,7 +5,7 @@ import {variables} from '../variables';
 const Wrapper = styled.div`
     width:95%;
     min-height:50px;
-    background-color:black;
+    background-color:${variables.taskBG};
     margin-top:10px;
     :last-child{
         margin-bottom:10px;
@@ -25,6 +25,7 @@ const Content = styled.div`
         }
     }
 `;
+
 
 const Task = (
     {

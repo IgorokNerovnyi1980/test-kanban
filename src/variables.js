@@ -2,6 +2,8 @@ export const variables = {
     //backgrounds
     mainBG: '#35383f',
     secondaryBG: '#2b2d33',
+    taskBG:'black',
+    textAreaBG:'#4f463e',
     accentBG:'#6a7d7d',
     //colors
     mainClr: 'white',
@@ -10,6 +12,7 @@ export const variables = {
     titleFZ: '1.3em',
     mainFZ: '1em',
     secondayFZ: '0.8em',
+    iconFZ:'1.8em',
     //box-shadow
     // other
     //media
