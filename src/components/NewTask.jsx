@@ -30,8 +30,7 @@ const BtnBox = styled.div`
 
 const Btn = styled.button`
     min-width: ${props => props.width ? '60%': '10%'};
-    min-height:30px;
-    padding:10px 0;
+    height:40px;
     background-color:${props => props.bg ? `${variables.textAreaBG}`: `${variables.secondaryBG}`};
     margin-left:${props => props.left ? '5px' : 'unset'};
     display:flex;

@@ -2,7 +2,7 @@ export const variables = {
     //backgrounds
     mainBG: '#35383f',
     secondaryBG: '#2b2d33',
-    taskBG:'black',
+    taskBG:'#191a1d',
     textAreaBG:'#4f463e',
     accentBG:'#6a7d7d',
     //colors
