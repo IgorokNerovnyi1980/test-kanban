@@ -2,6 +2,9 @@ import React, {useEffect} from 'react';
 import {createGlobalStyle} from 'styled-components';
 import {connect} from 'react-redux';
 import {getTest} from './redux/actions';
+import {variables} from './variables';
+//pages
+import Board from './pages/Board'
 
 
 const GlobalStyle = createGlobalStyle `
@@ -24,7 +27,7 @@ const GlobalStyle = createGlobalStyle `
   body{
     font-family: 'Helvetica', sans-serif;
     font-size: 14px;
-    color: #000000;
+    color:${variables.mainClr};
     font-weight: 400;
     min-width: 320px;
     overflow-x: hidden;
@@ -52,7 +55,7 @@ function App({getData = () => { }}) {
     return (
         <> 
         < GlobalStyle /> 
-        <h1>My template react-redux-router</h1>
+          <Board />
         </>
     );
 }
