@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {variables} from '../variables';
+import {Droppable} from 'react-beautiful-dnd';
 //components
 import Task from './Task';
 import NewTask from './NewTask';
@@ -37,6 +38,7 @@ const Column = (
         title = 'default',
         bgTitle = `${variables.accentBG}`,
         tasks = [],
+        id = ''
 
     }) => {
 
@@ -46,13 +48,19 @@ const Column = (
                 <h3>{title}</h3>
                 {tasks.length === 0 ? null : <p>({tasks.length})</p>}
             </Title>
-            {tasks && tasks.map(({id, text})=> (
-                <Task 
-                    key={id}
-                    id={id}
-                    text={text}
-                />
-            ))}
+            <Droppable droppableId={id}> 
+                {(provider) => 
+                // {...provider.droppableProps}
+                    tasks && tasks.map(({id, text})=> (
+                        <Task 
+                            key={id}
+                            id={id}
+                            text={text}
+                        />
+                    ))
+                }
+            
+            </Droppable>
             <NewTask />
         </Wrapper>
     )

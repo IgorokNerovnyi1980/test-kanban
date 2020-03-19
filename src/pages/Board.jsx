@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import {variables} from '../variables';
+import {connect} from 'react-redux';
+import {DragDropContext} from 'react-beautiful-dnd';
 //Component
 import Column from '../components/Column';
 
@@ -20,29 +22,43 @@ const Box = styled.div`
     align-items:flex-start;
 `;
 
-const testColumns = [
-    {title:'ON-HOLD', bg: '#fb7e46', id:'1', tasks:[{text: 'werwd fsde twsf', id:'w1'}]},
-    {title:'IN-PROGRESS', bg: '#2a92bf', id:'2', tasks:[]},
-    {title:'NEEDS-REVIEW', bg: '#f4ce46', id:'3', tasks:[{text: 'wdfg', id:'w3'}, {text: 'sdfhjjkjky', id:'w32'}]},
-    {title:'APPROVED', bg: '#00b961', id:'4', tasks:[{text: 'wefjghjk dfhdgcfxs sdfgfd sgb vettr dgfdfg efgef g', id:'w4'}]}
-];
-
-const Board = () => {
+const Board = (
+    {
+        columns = [],
+        tasksList = []
+    }) => {
 
     return(
         <Wrapper>
             <Box>
-                {testColumns && testColumns.map(({title, bg, id, tasks}) =>(
+                <DragDropContext
+                    onDragStart
+                    onDragUpdate
+                    onDragEnd
+                >
+                {columns && columns.map(({title, bg, id }) =>(
                     <Column 
                         key={id}
                         bgTitle={bg}
                         title={title}
-                        tasks={tasks}
+                        tasks={tasksList.filter(item => (item.row === id))}
+                        id={id}
                     />
                 ))}
+                </DragDropContext>
             </Box>
         </Wrapper>
     )
 };
 
-export default Board;
+const STP = state => (
+    {
+        columns: state.columns,
+        tasksList: state.tasks
+    });
+
+// const DTP = dispatch => ({
+//     fnClick: name => dispatch(handleChangeCurrentPage(name))
+// });
+
+export default connect(STP, null)(Board);

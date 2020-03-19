@@ -10,6 +10,7 @@
     "gh-pages": "^2.2.0",
     "moment": "^2.24.0",
     "react": "^16.13.0",
+    "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.0",
     "react-media": "^1.10.0",
     "react-moment": "^0.9.7",

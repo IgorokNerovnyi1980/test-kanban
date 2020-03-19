@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import {getTest} from './redux/actions';
 import {variables} from './variables';
 //pages
-import Board from './pages/Board'
+// import Board from './pages/Board';
+import MainPage from './testDnd/Main';
 
 
 const GlobalStyle = createGlobalStyle `
@@ -27,7 +28,6 @@ const GlobalStyle = createGlobalStyle `
     outline: none;
     border:none;
   }
-
   body{
     font-family: 'Helvetica', sans-serif;
     font-size: 14px;
@@ -46,16 +46,19 @@ const GlobalStyle = createGlobalStyle `
 }
 `;
 
-function App({getData = () => { }}) {
+function App({getTest = () => { }, test}) {
 
    useEffect(() => {
-    console.log(getData());
-   },);
+    
+    getTest();
 
+   },[]);//eslint-disable-line
+
+  //  console.log('test redux connect', test)
     return (
         <> 
         < GlobalStyle /> 
-          <Board />
+          <MainPage />
         </>
     );
 }
@@ -65,7 +68,7 @@ const STP = state => (
 );
 
 const DTP = dispatch => ({
-    getData: () => dispatch(getTest()),
+  getTest: () => dispatch(getTest()),
 });
 
 export default connect(STP, DTP,)(App);
