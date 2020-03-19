@@ -15,10 +15,12 @@ class MainPage extends Component{
     state = initialData;
 
     onDragEnd = result => {
-        const { destination, source, draggableId } =result;
-        const { state }=this;
+        const { destination, source, draggableId } = result;
+        const { state } = this;
 
-        if(!destination) return;
+        console.log()
+
+        if(!destination){ return;}
         if(
             destination.droppableId === source.droppableId &&
             destination.index === source.index
@@ -34,18 +36,16 @@ class MainPage extends Component{
             ...column,
             taskIds:newTaskIds,
         };
-
-        const newState = {
-            ...state,
-            [newColumn.id]:newColumn
-        }
+        const newState = {...state, columns: {...state.columns, [newColumn.id]:newColumn }};
         this.setState(newState);
     }
 
     render(){
         const {state, onDragEnd} = this;
+
+        console.log('state', state)
         
-        console.log(state.columns['column-1'].taskIds);
+        // console.log(state.columns['column-1'].taskIds);
 
         return(
             <Wrapper>
