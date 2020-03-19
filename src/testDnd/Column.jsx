@@ -34,7 +34,7 @@ class Column extends Component{
         } = this.props
         return(
             <Wrapper>
-                <h2>{column.title}</h2>
+                <h2>{column.title} {tasks.length}</h2>
                 <Droppable droppableId={column.id}>
                     {(provided) => (
                     <TaskList
