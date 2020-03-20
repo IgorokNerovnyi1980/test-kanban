@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
 import {variables} from '../variables';
 import {connect} from 'react-redux';
+import {onDragEnd} from '../redux/actions';
 import {DragDropContext} from 'react-beautiful-dnd';
+import {testData} from '../constants';
 //Component
 import Column from '../components/Column';
 
@@ -22,43 +24,104 @@ const Box = styled.div`
     align-items:flex-start;
 `;
 
-const Board = (
-    {
-        columns = [],
-        tasksList = []
-    }) => {
+class Board extends Component {
+    state = {
+        render: testData.render,
+        tasks:testData.tasks,
+        columns:testData.columns
+    };
 
-    return(
-        <Wrapper>
-            <Box>
+    onDragEnd = result => {
+        const { destination, source, draggableId } = result;
+        const {columns } = this.state;
+
+        if(!destination){ return;}
+        if(
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ){
+            return;
+        };
+
+        const start = columns[source.droppableId];
+        const finish = columns[destination.droppableId];
+        if(start === finish){
+
+            const newTaskIds = Array.from(start.taskIds);
+            newTaskIds.splice(source.index,1);
+            newTaskIds.splice(destination.index, 0, draggableId);
+            const newColumn = {
+                ...start,
+                taskIds:newTaskIds,
+            };
+            const newState = {...this.state, columns: {...this.state.columns, [newColumn.id]:newColumn }};
+            this.setState(newState);
+            return;
+        }
+        const startTaskIds =Array.from(start.taskIds);
+        startTaskIds.splice(source.index,1);
+        const newStart = {
+            ...start,
+            taskIds:startTaskIds
+        };
+        const finishTaskIds =Array.from(finish.taskIds);   
+        finishTaskIds.splice(destination.index, 0, draggableId);
+        const newFinish = {
+            ...finish,
+            taskIds:finishTaskIds
+        };
+
+        const newState = {
+            ...this.state,
+            columns: {
+                ...this.state.columns,
+                [newStart.id]:newStart,
+                [newFinish.id]:newFinish  
+            }};
+
+        this.setState(newState);
+    }
+    render(){
+        const {state:{
+                render,
+                tasks,
+                columns },
+                onDragEnd } = this;
+
+        return(
+            <Wrapper>
+                <Box>
                 <DragDropContext
-                    onDragStart
-                    onDragUpdate
-                    onDragEnd
-                >
-                {columns && columns.map(({title, bg, id }) =>(
-                    <Column 
-                        key={id}
-                        bgTitle={bg}
-                        title={title}
-                        tasks={tasksList.filter(item => (item.row === id))}
-                        id={id}
-                    />
-                ))}
-                </DragDropContext>
-            </Box>
-        </Wrapper>
-    )
+                     onDragEnd={onDragEnd}
+                    >
+                    {render.map(columnName =>(
+                        <Column 
+                            key={columnName}
+                            columnId={columns[columnName].id}
+                            bgTitle={columns[columnName].bg}
+                            title={columns[columnName].title}
+                            tasks={columns[columnName].taskIds.map(id =>(
+                                tasks.find(task => task.id === id)
+                            ))}
+                        />
+                    ))}
+                     </DragDropContext>
+                </Box>    
+            </Wrapper>
+        )
+    }
+
 };
 
 const STP = state => (
     {
-        columns: state.columns,
-        tasksList: state.tasks
+        render: state.render,
+        tasks:state.tasks,
+        columns:state.columns
     });
 
-// const DTP = dispatch => ({
-//     fnClick: name => dispatch(handleChangeCurrentPage(name))
-// });
+const DTP = dispatch => ({
+    onDragEnd: result => dispatch(onDragEnd(result))
+});
 
-export default connect(STP, null)(Board);
+export default connect(STP, DTP)(Board);

@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import {getTest} from './redux/actions';
 import {variables} from './variables';
 //pages
-// import Board from './pages/Board';
-import MainPage from './testDnd/Main';
+import Board from './pages/Board';
+// import MainPage from './testDnd/Main';
 
 
 const GlobalStyle = createGlobalStyle `
@@ -58,7 +58,7 @@ function App({getTest = () => { }, test}) {
     return (
         <> 
         < GlobalStyle /> 
-          <MainPage />
+          <Board />
         </>
     );
 }

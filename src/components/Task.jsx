@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
 import {variables} from '../variables';
+import {Draggable}from 'react-beautiful-dnd';
 
 const Wrapper = styled.div`
     width:95%;
@@ -26,20 +27,37 @@ const Content = styled.div`
     }
 `;
 
+class Task extends Component{
 
-const Task = (
-    {
-        id ='test',
-        text = 'default'
-    }) => {
+    render(){
+        const {
+            id,
+            text,
+            index
+        } = this.props;
+
         return(
-            <Wrapper>
-                <Content>
-                    <p><span>id:</span> {id}</p>
-                    <p>{text}</p>
-                </Content>
-            </Wrapper>
-        )
-    };
+            <Draggable
+                draggableId={id}
+                index={index}
+                >
+                {(provided) => (
+                    <Wrapper
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                    >
+                        <Content>
+                            <p><span>id:</span> {id}</p>
+                            <p>{text}</p>
+                        </Content>
+                    </Wrapper>
+                )}
+                </Draggable>
 
-    export default Task;
+        )
+
+    }
+};
+
+export default Task;

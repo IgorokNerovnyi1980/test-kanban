@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
 import {variables} from '../variables';
 import {Droppable} from 'react-beautiful-dnd';
@@ -15,6 +15,13 @@ const Wrapper = styled.div`
     flex-direction:column;
     justify-content:center;
     align-items:center;
+    .taskBox{
+        width:100%;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+    }
 `;
 
 const Title = styled.div`
@@ -33,36 +40,46 @@ const Title = styled.div`
     }  
 `;
 
-const Column = (
-    {
+class Column extends Component{
+    render(){
+       const {
         title = 'default',
         bgTitle = `${variables.accentBG}`,
         tasks = [],
-        id = ''
+        columnId = ''
 
-    }) => {
+        } = this.props 
 
-    return(
-        <Wrapper>
-            <Title bgTitle={bgTitle}>
-                <h3>{title}</h3>
-                {tasks.length === 0 ? null : <p>({tasks.length})</p>}
-            </Title>
-            <Droppable droppableId={id}> 
-                {(provider) => 
-                // {...provider.droppableProps}
-                    tasks && tasks.map(({id, text})=> (
-                        <Task 
-                            key={id}
-                            id={id}
-                            text={text}
-                        />
-                    ))
-                }
-            
-            </Droppable>
-            <NewTask />
-        </Wrapper>
-    )
+        return(
+            <Wrapper>
+                <Title bgTitle={bgTitle}>
+                    <h3>{title}</h3>
+                    {tasks.length === 0 ? null : <p>({tasks.length})</p>}
+                </Title>
+                <Droppable droppableId={columnId}>
+                    {(provided) => (
+                        <div className="taskBox"
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                        >
+                        
+                                {tasks && tasks.map(({id, text},index)=> (
+                                    <Task 
+                                        key={id}
+                                        id={id}
+                                        text={text}
+                                        index={index}
+                                    />
+                                    ))}
+                            {provided.placeholder}
+                        </div>
+                        
+                    )}
+                </Droppable>
+                <NewTask />
+            </Wrapper>
+        )
+    }
 };
+
 export default Column;
