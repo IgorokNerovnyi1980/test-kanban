@@ -1,5 +1,4 @@
 export const Type = {
-    GET_TEST: 'GET_TEST',
     UPDATE_COLUMN:'UPDATE_COLUMN',
     UPDATE_TASKS:'UPDATE_TASKS'
 };

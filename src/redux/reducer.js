@@ -22,15 +22,8 @@ const initialState = {
 
 };
 
-// UPDATE_COLUMN UPDATE_TASKS
-
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case Type.GET_TEST:
-            return { 
-                ...state,
-                test: action.payload
-            };
         case Type.UPDATE_COLUMN:
             return{
                 ...state,
