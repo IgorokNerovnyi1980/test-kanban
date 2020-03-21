@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {variables} from '../variables';
+import {connect} from 'react-redux';
+import {updateTasks, updateColumns} from '../redux/actions';
+import shortid from 'shortid';
 
 const Form = styled.form`
     width:100%;
@@ -51,10 +54,45 @@ const Icon = styled.span`
     font-size:${variables.iconFZ};
 `;
 
-const NewTask = () => {
+const NewTask = (
+    {
+        columnId,
+        updateTasks,
+        tasks,
+        updateColumns,
+        columns
+
+    }) => {
 
     const [ isOpen, setIsOpen ] = useState(false);
     const [ inputValue, setInputValue ] = useState('');
+
+    const addNewTaskInRender = () => {
+        const index = tasks.length;
+        console.log('index', index)
+        console.log(tasks[index]);
+
+       
+};
+
+    const createNewTask = (value, rowId) => {
+        const newObj = {
+            id: shortid.generate(),
+            row: rowId,
+            seq_num: 0,
+            text: value
+            };
+            console.log(newObj);
+        const result = [...tasks, newObj];
+        updateTasks(result);
+         const newColumn = {
+            ...columns[columnId],
+            taskIds: [...columns[columnId].taskIds, newObj.id]
+            };
+         const newobjColumns = {...columns,[columnId]: newColumn }; 
+         updateColumns(newobjColumns);
+
+    }
 
     const handleOpen = () => {
         setIsOpen(true);
@@ -66,9 +104,10 @@ const NewTask = () => {
 
     const handleSubmmit = e => {
         e.preventDefault();
-        console.log(inputValue);
+        createNewTask(inputValue,columnId.slice(-1));
         setInputValue('');
         setIsOpen(false);
+        addNewTaskInRender();
     };
 
     const changeInputValue = e => {
@@ -111,4 +150,16 @@ const NewTask = () => {
             </Btn>
         )
 };
-export default NewTask;
+
+const STP = state => (
+    {
+        tasks:state.tasks,
+        columns:state.columns
+    });
+
+const DTP = dispatch => ({
+    updateTasks: arr => dispatch(updateTasks(arr)),
+    updateColumns: obj => dispatch(updateColumns(obj))
+});
+
+export default connect(STP, DTP)(NewTask);

@@ -63,7 +63,7 @@ class Column extends Component{
                             {...provided.droppableProps}
                         >
                         
-                                {tasks && tasks.map(({id, text},index)=> (
+                                {tasks && tasks.map(({id, text}, index)=> (
                                     <Task 
                                         key={id}
                                         id={id}
@@ -76,7 +76,7 @@ class Column extends Component{
                         
                     )}
                 </Droppable>
-                <NewTask />
+                <NewTask columnId={columnId}/>
             </Wrapper>
         )
     }

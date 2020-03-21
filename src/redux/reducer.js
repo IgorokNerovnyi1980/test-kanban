@@ -12,9 +12,9 @@ const initialState = {
     ],
 
     columns:{
-        row_0:{title:'ON-HOLD', bg: '#fb7e46', id:'0', taskIds:['1','2'] },
-        row_1:{title:'IN-PROGRESS', bg: '#2a92bf', id:'1', taskIds:['0']},
-        row_2:{title:'NEEDS-REVIEW', bg: '#f4ce46', id:'2', taskIds:['3','4', '5','6']},
+        row_0:{title:'ON-HOLD', bg: '#fb7e46', id:'0', taskIds:[] },
+        row_1:{title:'IN-PROGRESS', bg: '#2a92bf', id:'1', taskIds:[]},
+        row_2:{title:'NEEDS-REVIEW', bg: '#f4ce46', id:'2', taskIds:[]},
         row_3:{title:'APPROVED', bg: '#00b961', id:'3', taskIds:[]}
     }
     ,

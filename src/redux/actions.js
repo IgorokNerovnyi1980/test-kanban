@@ -1,8 +1,6 @@
 // import axios from 'axios';
 import {Type} from './types';
 
-// UPDATE_COLUMN UPDATE_TASKS
-
 function putColumnsInState(obj) {
     return {type: Type.UPDATE_COLUMN, payload: obj};
 };
@@ -21,6 +19,14 @@ export const updateColumns = (obj) => {
 
 export const updateTasksPosition = (arr) => {
     
+    return async function (dispatch) {
+        
+        dispatch(putTasksInState(arr));
+};
+};
+
+export const updateTasks = (arr) => {
+    console.log('fn')
     return async function (dispatch) {
         
         dispatch(putTasksInState(arr));

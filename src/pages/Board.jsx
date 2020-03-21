@@ -36,6 +36,23 @@ class Board extends Component {
         updateTasksPosition(result);
     }
 
+    sortTasks = () => {
+        const { tasks,columns,render, updateColumns } = this.props;
+
+        let result = {};
+
+        render.map(column => {
+
+            const newColumn = {
+            ...columns[column],
+            taskIds: tasks.filter( (task) => task.row === columns[column].id).map((task) => task.id)
+            };
+            return result = {...result,[column]: newColumn };       
+    })
+
+    return updateColumns(result);
+};
+
     onDragEnd = result => {
         const { destination, source, draggableId } = result;
         const { props:{columns, updateColumns}, newTaskPosition } = this;
@@ -69,7 +86,6 @@ class Board extends Component {
             ...start,
             taskIds:startTaskIds
         };
-        // newTaskPosition(startTaskIds,startTaskIds.id);
         const finishTaskIds =Array.from(finish.taskIds);  
         finishTaskIds.splice(destination.index, 0, draggableId);
         const newFinish = {
@@ -86,19 +102,21 @@ class Board extends Component {
         updateColumns(newDataForState);
     };
 
+    componentDidMount(){
+        this.sortTasks();
+    }
 
  
     render(){
         const {
                 props:{
-                render,
-                tasks,
-                columns  
+                    render,
+                    tasks,
+                    columns  
                 },
                 onDragEnd } = this;
 
-                console.log(tasks);
-
+                console.log(tasks)
         return(
             <Wrapper>
                 <Box>
