@@ -16,7 +16,7 @@ export const testData = {
         row_0:{title:'ON-HOLD', bg: '#fb7e46', id:'row_0',taskIds:['t-2','t-3'] },
         row_1:{title:'IN-PROGRESS', bg: '#2a92bf', id:'row_1', taskIds:['t-1']},
         row_2:{title:'NEEDS-REVIEW', bg: '#f4ce46', id:'row_2', taskIds:['t-5','t-6', 't-7','t-8']},
-        row_3:{title:'APPROVED', bg: '#00b961', id:'row_3', taskIds:['t-1']}
+        row_3:{title:'APPROVED', bg: '#00b961', id:'row_3', taskIds:[]}
     }
     ,
     render:[ 'row_0', 'row_1', 'row_2', 'row_3' ],

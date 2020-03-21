@@ -1,11 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {createGlobalStyle} from 'styled-components';
-import {connect} from 'react-redux';
-import {getTest} from './redux/actions';
 import {variables} from './variables';
 //pages
 import Board from './pages/Board';
-// import MainPage from './testDnd/Main';
 
 
 const GlobalStyle = createGlobalStyle `
@@ -46,15 +43,8 @@ const GlobalStyle = createGlobalStyle `
 }
 `;
 
-function App({getTest = () => { }, test}) {
+function App() {
 
-   useEffect(() => {
-    
-    getTest();
-
-   },[]);//eslint-disable-line
-
-  //  console.log('test redux connect', test)
     return (
         <> 
         < GlobalStyle /> 
@@ -63,12 +53,4 @@ function App({getTest = () => { }, test}) {
     );
 }
 
-const STP = state => (
-    {test: state.test}
-);
-
-const DTP = dispatch => ({
-  getTest: () => dispatch(getTest()),
-});
-
-export default connect(STP, DTP,)(App);
+export default App;

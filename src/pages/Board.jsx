@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import {variables} from '../variables';
 import {connect} from 'react-redux';
-import {onDragEnd} from '../redux/actions';
 import {DragDropContext} from 'react-beautiful-dnd';
-import {testData} from '../constants';
-//Component
+import {updateColumns} from '../redux/actions';
+//Components
 import Column from '../components/Column';
 
 const Wrapper = styled.div`
@@ -25,15 +24,10 @@ const Box = styled.div`
 `;
 
 class Board extends Component {
-    state = {
-        render: testData.render,
-        tasks:testData.tasks,
-        columns:testData.columns
-    };
 
     onDragEnd = result => {
         const { destination, source, draggableId } = result;
-        const {columns } = this.state;
+        const {columns, updateColumns } = this.props;
 
         if(!destination){ return;}
         if(
@@ -45,6 +39,7 @@ class Board extends Component {
 
         const start = columns[source.droppableId];
         const finish = columns[destination.droppableId];
+        console.log(finish.taskIds)
         if(start === finish){
 
             const newTaskIds = Array.from(start.taskIds);
@@ -54,38 +49,43 @@ class Board extends Component {
                 ...start,
                 taskIds:newTaskIds,
             };
-            const newState = {...this.state, columns: {...this.state.columns, [newColumn.id]:newColumn }};
-            this.setState(newState);
+            console.log(newColumn.taskIds);
+            console.log(newColumn.id);
+            const newDataForState = {...columns, [`row_${newColumn.id}`]:newColumn };
+
+            updateColumns(newDataForState);
             return;
         }
+
         const startTaskIds =Array.from(start.taskIds);
         startTaskIds.splice(source.index,1);
         const newStart = {
             ...start,
             taskIds:startTaskIds
         };
-        const finishTaskIds =Array.from(finish.taskIds);   
+        const finishTaskIds =Array.from(finish.taskIds);  
         finishTaskIds.splice(destination.index, 0, draggableId);
         const newFinish = {
             ...finish,
             taskIds:finishTaskIds
         };
+        const newDataForState = {
+                ...columns,
+                [`row_${newStart.id}`]:newStart,
+                [`row_${newFinish.id}`]:newFinish  
+            };
+        updateColumns(newDataForState);
+    };
 
-        const newState = {
-            ...this.state,
-            columns: {
-                ...this.state.columns,
-                [newStart.id]:newStart,
-                [newFinish.id]:newFinish  
-            }};
 
-        this.setState(newState);
-    }
+ 
     render(){
-        const {state:{
+        const {
+                props:{
                 render,
                 tasks,
-                columns },
+                columns  
+                },
                 onDragEnd } = this;
 
         return(
@@ -97,7 +97,7 @@ class Board extends Component {
                     {render.map(columnName =>(
                         <Column 
                             key={columnName}
-                            columnId={columns[columnName].id}
+                            columnId={`row_${columns[columnName].id}`}
                             bgTitle={columns[columnName].bg}
                             title={columns[columnName].title}
                             tasks={columns[columnName].taskIds.map(id =>(
@@ -121,7 +121,7 @@ const STP = state => (
     });
 
 const DTP = dispatch => ({
-    onDragEnd: result => dispatch(onDragEnd(result))
+    updateColumns: obj => dispatch(updateColumns(obj))
 });
 
 export default connect(STP, DTP)(Board);

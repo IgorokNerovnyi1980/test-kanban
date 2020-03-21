@@ -48,7 +48,7 @@ class Column extends Component{
         tasks = [],
         columnId = ''
 
-        } = this.props 
+        } = this.props;
 
         return(
             <Wrapper>
