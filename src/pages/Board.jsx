@@ -115,8 +115,6 @@ class Board extends Component {
                     columns  
                 },
                 onDragEnd } = this;
-
-                console.log(tasks)
         return(
             <Wrapper>
                 <Box>

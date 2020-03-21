@@ -26,7 +26,6 @@ export const updateTasksPosition = (arr) => {
 };
 
 export const updateTasks = (arr) => {
-    console.log('fn')
     return async function (dispatch) {
         
         dispatch(putTasksInState(arr));
