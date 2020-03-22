@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import {variables} from '../variables';
 import {connect} from 'react-redux';
 import {DragDropContext} from 'react-beautiful-dnd';
-import {updateColumns, updateTasksPosition} from '../redux/actions';
+import {updateColumns,
+        updateTasksPosition,
+        updateTasks} from '../redux/actions';
 //Components
 import Column from '../components/Column';
 
@@ -34,7 +36,7 @@ class Board extends Component {
         });
 
         updateTasksPosition(result);
-    }
+    };
 
     sortTasks = () => {
         const { tasks,columns,render, updateColumns } = this.props;
@@ -51,7 +53,7 @@ class Board extends Component {
     })
 
     return updateColumns(result);
-};
+    };
 
     onDragEnd = result => {
         const { destination, source, draggableId } = result;
@@ -103,6 +105,7 @@ class Board extends Component {
     };
 
     componentDidMount(){
+
         this.sortTasks();
     }
 
@@ -149,7 +152,8 @@ const STP = state => (
 
 const DTP = dispatch => ({
     updateColumns: obj => dispatch(updateColumns(obj)),
-    updateTasksPosition: arr => dispatch(updateTasksPosition(arr))
+    updateTasksPosition: arr => dispatch(updateTasksPosition(arr)),
+    updateTasks: arr => dispatch(updateTasks(arr))
 });
 
 export default connect(STP, DTP)(Board);

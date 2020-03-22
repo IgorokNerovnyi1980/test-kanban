@@ -67,14 +67,6 @@ const NewTask = (
     const [ isOpen, setIsOpen ] = useState(false);
     const [ inputValue, setInputValue ] = useState('');
 
-    const addNewTaskInRender = () => {
-        const index = tasks.length;
-        console.log('index', index)
-        console.log(tasks[index]);
-
-       
-};
-
     const createNewTask = (value, rowId) => {
         const newObj = {
             id: shortid.generate(),
@@ -82,9 +74,9 @@ const NewTask = (
             seq_num: 0,
             text: value
             };
-            console.log(newObj);
         const result = [...tasks, newObj];
-        updateTasks(result);
+            updateTasks(result);
+            
          const newColumn = {
             ...columns[columnId],
             taskIds: [...columns[columnId].taskIds, newObj.id]
@@ -107,7 +99,6 @@ const NewTask = (
         createNewTask(inputValue,columnId.slice(-1));
         setInputValue('');
         setIsOpen(false);
-        addNewTaskInRender();
     };
 
     const changeInputValue = e => {
